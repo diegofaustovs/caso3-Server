@@ -139,7 +139,7 @@ public class ThreadServidor extends Thread{
 				}
 				semaphore.release();
 				
-				System.out.println("Se recibe a un cliente.");
+				System.out.println("Se recibe a un cliente. -->");
 
 				// Inicializa el lector y escritor del socket.
 				PrintWriter writer = new PrintWriter(s.getOutputStream() , true);
@@ -261,7 +261,7 @@ public class ThreadServidor extends Thread{
 				
 				//////////////////////////////////////////////////////////////////////////
 				authEndTime = System.nanoTime();
-				System.out.println("Tiempo de autenticación: " + (authEndTime - authStartTime));
+				System.out.println("Tiempo de autenticación: " + (authEndTime - authStartTime) + "-->");
 				//////////////////////////////////////////////////////////////////////////
 				
 				//////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ public class ThreadServidor extends Thread{
 										resultado.getBytes(COD), llaveSimetrica, algoritmos[3])));
 				
 				clientRespEndTime = System.nanoTime();
-				System.out.println("Tiempo de respuesta a un pedido: " + (clientRespEndTime - clientRespStartTime));
+				System.out.println("Tiempo de respuesta a un pedido: " + (clientRespEndTime - clientRespStartTime) + "-->");
 				
 				//////////////////////////////////////////////////////////////////////////
 				// Recibe el resultado de la transaccion y termina la conexion.
@@ -305,7 +305,7 @@ public class ThreadServidor extends Thread{
 					throw new Exception();
 				}
 
-				System.out.println("Termino requerimientos del cliente en perfectas condiciones.");
+				System.out.println("Termino requerimientos del cliente en perfectas condiciones. -->");
 
 			} catch (InterruptedException e) {
 				// Si hubo algun error tomando turno en el semaforo.

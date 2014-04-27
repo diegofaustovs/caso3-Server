@@ -6,6 +6,8 @@ package pools;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.security.Security;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 import threadServidor.ThreadServidor;
@@ -30,12 +32,18 @@ public class Pool_16_Thread {
 	public static final int PUERTO = 5555;
 	
 	/**
+	 * 
+	 */
+	private static ExecutorService pool;
+	
+	/**
 	 * Metodo main del servidor con seguridad que inicializa un 
 	 * pool de threads determinado por la constante nThreads.
 	 * @param args Los argumentos del metodo main (vacios para este ejemplo).
 	 * @throws IOException Si el socket no pudo ser creado.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		
 		// Adiciona la libreria como un proveedor de seguridad.
 		// Necesario para crear llaves.
@@ -48,15 +56,11 @@ public class Pool_16_Thread {
 		Semaphore semaphore = new Semaphore(1);
 		
 		// Genera n threads que correran durante la sesion.
-		ThreadServidor [] threads = new ThreadServidor[N_THREADS];
-		for ( int i = 0 ; i < N_THREADS ; i++) {
-			try {
-				threads[i] = new ThreadServidor(socket , semaphore);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("El servidor esta listo para aceptar conexiones.");
+		
+		pool = Executors.newFixedThreadPool(N_THREADS);
+		pool.execute(new ThreadServidor(socket , semaphore));
+			
+		System.out.println("El servidor esta listo para aceptar conexiones. -->");
 	}
 	
 }
